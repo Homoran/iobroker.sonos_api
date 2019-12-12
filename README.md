@@ -20,17 +20,35 @@ cd node-sonos-http-api-master
 npm install --production
 ```
 ---
-
-## Start des Servers
+### Test der API auf Funktion
+#### Start des Servers
 
 ```
 npm start
 ```
 Putty erst einmal offen lassen !!
 
+---
+
+## Erster Test
+
+Aufruf der IP des ioBroker Servers mit Port 5005
+
+http://192.168.xxx.xxx:5005/
+
+In Putty tauchen jetzt zwei Meldungen auf, diese erst einmal ignorieren.
+
+1.) settings.json wird nicht gefunden ( ignorieren )
+Wenn keine settings.json gefunden wird, wird die default Einstellung genommen.
+In den Settings könnten spezielle Einstellungen verändert werden, wie z.B der Port 5005
+
+2.) http server listening on 0.0.0.0
+Der Server lauscht also an allen IPs
+
+---
 ### Einfügen in den Autostart
 ```
-nano /etc/systemd/system/sonosapi.service
+sudo nano /etc/systemd/system/sonosapi.service
 ```
 
 Dazu eine Datei `sonosapi.service` mit folgendem Inhalt anlegen
@@ -53,25 +71,11 @@ WantedBy=multi-user.target
 Den Pfad zu server.js bitte anpassen!
 
 Anschließend den Service starten mit `sudo systemctl enable sonosapi.service`
+Danach einen reboot aus führen mit `sudo reboot`
 
 ---
 
-## Erster Test
-
-Aufruf der IP des ioBroker Servers mit Port 5005
-
-http://192.168.xxx.xxx:5005/
-
-In Putty tauchen jetzt zwei Meldungen auf, diese erst einmal ignorieren.
-
-1.) settings.json wird nicht gefunden ( ignorieren )
-Wenn keine settings.json gefunden wird, wird die default Einstellung genommen.
-In den Settings könnten spezielle Einstellungen verändert werden, wie z.B der Port 5005
-
-2.) http server listening on 0.0.0.0
-Der Server lauscht also an allen IPs
-
-##TTS-Befehle
+## TTS-Befehle
 Man kann verschiedene Sprachen und Stimmen, sowie verschiedene TTS-Engines verwenden:
 
 * voicerss
