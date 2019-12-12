@@ -1,6 +1,9 @@
 # iobroker.sonos_api
 How to Use the sonos API
- 
+
+Nach Vorarbeit des Users skokarl im ioBroker-Forum
+https://forum.iobroker.net/topic/22888/gel%C3%B6st-sonos-http-api-installation-f%C3%BCr-newbies-dummies-und-mich
+
 ---
 
 ## Installation
