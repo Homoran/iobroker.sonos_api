@@ -9,7 +9,7 @@ https://forum.iobroker.net/topic/22888/gel%C3%B6st-sonos-http-api-installation-f
 
 ## Installation
 
-Mit Putty auf dem der kOnsole vom ioBroker Server Broker einloggen
+Mit Putty auf dem der Konsole vom ioBroker Server Broker einloggen
 und folgende Befehle der Reihe nach eingeben
 
 
@@ -20,17 +20,15 @@ cd node-sonos-http-api-master
 npm install --production
 ```
 ---
-### Test der API auf Funktion
-#### Start des Servers
+## Test der API auf Funktion
+### Start des Servers
 
 ```
 npm start
 ```
 Putty erst einmal offen lassen !!
 
----
-
-## Erster Test
+### Erster Test
 
 Aufruf der IP des ioBroker Servers mit Port 5005
 
@@ -46,7 +44,7 @@ In den Settings könnten spezielle Einstellungen verändert werden, wie z.B der 
 Der Server lauscht also an allen IPs
 
 ---
-### Einfügen in den Autostart
+## Einfügen in den Autostart
 ```
 sudo nano /etc/systemd/system/sonosapi.service
 ```
