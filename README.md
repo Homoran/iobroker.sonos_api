@@ -1,22 +1,23 @@
 # iobroker.sonos_api
 How to Use the sonos API
+ 
+---
 
-
-Hier die Anleitung ( zusammengesucht, getestet und für gut befunden )
-Achtung, ich habe keine große Ahnung, daher alles auf eigene Verantwortung.
+## Installation
 
 Mit Putty auf dem der kOnsole vom ioBroker Server Broker einloggen
 und folgende Befehle der Reihe nach eingeben
 
-## Installation
+
 ```
 wget https://github.com/jishi/node-sonos-http-api/archive/master.zip
 unzip master.zip
 cd node-sonos-http-api-master
 npm install --production
 ```
+---
 
-##Start des Servers
+## Start des Servers
 
 ```
 npm start
@@ -49,8 +50,7 @@ Den Pfad zu server.js bitte anpassen!
 
 Anschließend den Service starten mit `sudo systemctl enable sonosapi.service`
 
-
-
+---
 
 ## Erster Test
 
@@ -90,6 +90,7 @@ Der Aufruf eines TTS über Google läuft wie folgt:
 [language_code] ist die gewünschte Sprache, im deutschsprachiegen Raum also `de`
 [announce volume] ist die gewünschte Lautstärke. 
 
+---
 
 ## Weitere Funktionen
 
