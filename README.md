@@ -112,6 +112,7 @@ Jede  5 Minuten wird diese mit erhöhter Lautstärke wiederholt, bis das Fenster
 und hier als Import
 
 <details>
+  
 ```
 <xml xmlns="http://www.w3.org/1999/xhtml">
   <variables>
