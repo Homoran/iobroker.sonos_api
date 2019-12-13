@@ -98,6 +98,387 @@ Der Aufruf eines TTS über Google läuft wie folgt:
 
 ---
 
+### Beispiel: Fenster offen-Meldung
+Die wohl häufigste Anwendung für eine TTS-Aktion ist der Wunsch zu wissen, wenn ein Fenster nach längerer Zeit vergessen wurde zu schließen, gerade in der kalten Jahreszeit.
+
+Das folgende Beispiel zeigt ein etwas umfangreicheres Blockly, in dem mehrere Variablen verwendet werden, um das Blockly leicht an andere Anwendungen anzupassen.
+
+Hier wird nach dem Öffnen des Fensters ein Timer gestartet, der sich alle 5 Minuten erhöht.
+Nach 10 Minuten gibt es auf allen SONOS-LAutsprechern die erste Meldung.
+Jede  5 Minuten wird diese mit erhöhter Lautstärke wiederholt, bis das Fenster wieder geschlossen ist:
+
+![Hier soll das Bild sein](Blockly_Ansage_WC_Fenster.png "Das Blockly als Bild")
+
+und hier als Import
+
+[S]
+¸¸¸
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <variables>
+    <variable type="" id="@^s0bK9fM:FXZwSl7)^N">Lautstärke</variable>
+    <variable type="" id="6:s1Zo4W5}f483}-qH}T">Counter</variable>
+    <variable type="" id="SFwS`:dt]EDO$hdjaz:5">Raum</variable>
+    <variable type="" id="gvn.@ec[1RiFVpP7PX{a">Nachricht</variable>
+    <variable type="undefined" id="Timer_WCfenster">Timer_WCfenster</variable>
+    <variable type="" id="1T#Gu#s8/SO!EIx[Q,9=">Befehl</variable>
+  </variables>
+  <block type="variables_set" id="q{;[qF4pxCOp@7|.kUM4" x="188" y="-487">
+    <field name="VAR" id="@^s0bK9fM:FXZwSl7)^N" variabletype="">Lautstärke</field>
+    <value name="VALUE">
+      <block type="math_number" id="gSS+(#*mDEN:JgfL@`wz">
+        <field name="NUM">30</field>
+      </block>
+    </value>
+    <next>
+      <block type="variables_set" id="S@vH848L$j=0ywb)[}fP">
+        <field name="VAR" id="6:s1Zo4W5}f483}-qH}T" variabletype="">Counter</field>
+        <value name="VALUE">
+          <block type="math_number" id="_Va5N^VM3I|Bxz@}*7Qh">
+            <field name="NUM">0</field>
+          </block>
+        </value>
+        <next>
+          <block type="variables_set" id="i0(fyj`ojuMM~w/sIJkm">
+            <field name="VAR" id="SFwS`:dt]EDO$hdjaz:5" variabletype="">Raum</field>
+            <value name="VALUE">
+              <block type="text" id="*|*o=(NTCaGIUc5L}M#@">
+                <field name="TEXT">alle</field>
+              </block>
+            </value>
+            <next>
+              <block type="variables_set" id="Brv7I`#{[,Y4b:iq=cP8">
+                <field name="VAR" id="gvn.@ec[1RiFVpP7PX{a" variabletype="">Nachricht</field>
+                <value name="VALUE">
+                  <block type="text" id="FO#/mWcmHx42?Q^{BvgR">
+                    <field name="TEXT">Das W C fenster ist seit 10 Minuten offen</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="on_ext" id="*$F$h%MF@=voV_mnHxLk">
+                    <mutation items="1"></mutation>
+                    <field name="CONDITION">ne</field>
+                    <field name="ACK_CONDITION"></field>
+                    <value name="OID0">
+                      <shadow type="field_oid" id="ULPFV!EFYivh/tGiULG*">
+                        <field name="oid">hm-rpc.0.JRT0001400.1.STATE</field>
+                      </shadow>
+                    </value>
+                    <statement name="STATEMENT">
+                      <block type="controls_if" id="y)yHf/q-?:(j/Q*dwe(c">
+                        <mutation else="1"></mutation>
+                        <value name="IF0">
+                          <block type="logic_compare" id="t#/rRBq=7!Wd%Jxns8/@">
+                            <field name="OP">NEQ</field>
+                            <value name="A">
+                              <block type="get_value" id="0l;1(ei`iKBK]5-zRb^t">
+                                <field name="ATTR">val</field>
+                                <field name="OID">hm-rpc.0.JRT0001400.1.STATE</field>
+                              </block>
+                            </value>
+                            <value name="B">
+                              <block type="math_number" id="YY:g3hS.)6Gh+45Dtk7i">
+                                <field name="NUM">0</field>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                        <statement name="DO0">
+                          <block type="timeouts_clearinterval" id="u{%g}+LYK5ek*DE@NkK[">
+                            <field name="NAME">Timer_WCfenster</field>
+                            <next>
+                              <block type="timeouts_setinterval" id=":nL4Pw_k(Kf.jA!XMj*e">
+                                <field name="NAME">Timer_WCfenster</field>
+                                <field name="INTERVAL">5</field>
+                                <field name="UNIT">min</field>
+                                <statement name="STATEMENT">
+                                  <block type="variables_set" id="nI?TFBxvyt},^dN$~trc">
+                                    <field name="VAR" id="6:s1Zo4W5}f483}-qH}T" variabletype="">Counter</field>
+                                    <value name="VALUE">
+                                      <block type="math_arithmetic" id="7#RafW+X,_c5JF/8H4?0">
+                                        <field name="OP">ADD</field>
+                                        <value name="A">
+                                          <shadow type="math_number" id="vQ6)nub,ePq`*|,=[w3d">
+                                            <field name="NUM">1</field>
+                                          </shadow>
+                                          <block type="variables_get" id="48jA23v`2Hh)m63coJz`">
+                                            <field name="VAR" id="6:s1Zo4W5}f483}-qH}T" variabletype="">Counter</field>
+                                          </block>
+                                        </value>
+                                        <value name="B">
+                                          <shadow type="math_number" id="0+mw;mJ@CC9P85FRknk?">
+                                            <field name="NUM">5</field>
+                                          </shadow>
+                                        </value>
+                                      </block>
+                                    </value>
+                                    <next>
+                                      <block type="variables_set" id="bl-miA0OUtio8DsmTJlJ">
+                                        <field name="VAR" id="gvn.@ec[1RiFVpP7PX{a" variabletype="">Nachricht</field>
+                                        <value name="VALUE">
+                                          <block type="text_join" id=",LNlctr%P=?(F~taMOB(">
+                                            <mutation items="3"></mutation>
+                                            <value name="ADD0">
+                                              <block type="text" id="XPR^x`{TLs/C},wFickb">
+                                                <field name="TEXT">Das W C fenster ist seit </field>
+                                              </block>
+                                            </value>
+                                            <value name="ADD1">
+                                              <block type="variables_get" id="Bub#:@(_C=f5ONGMN,Cw">
+                                                <field name="VAR" id="6:s1Zo4W5}f483}-qH}T" variabletype="">Counter</field>
+                                              </block>
+                                            </value>
+                                            <value name="ADD2">
+                                              <block type="text" id="}K)l#fBVM89E5iZ_,@c(">
+                                                <field name="TEXT"> Minuten offen</field>
+                                              </block>
+                                            </value>
+                                          </block>
+                                        </value>
+                                        <next>
+                                          <block type="controls_if" id="z%6f_ZGAAWi2GZ;tS]F^">
+                                            <value name="IF0">
+                                              <block type="logic_compare" id="ed4uNFC+d$vuk9+Bz8{Q">
+                                                <field name="OP">LTE</field>
+                                                <value name="A">
+                                                  <block type="variables_get" id="z=`wd`.`V$dn,]OuGCTB">
+                                                    <field name="VAR" id="@^s0bK9fM:FXZwSl7)^N" variabletype="">Lautstärke</field>
+                                                  </block>
+                                                </value>
+                                                <value name="B">
+                                                  <block type="math_number" id="ML*WB=F,YmX0kI0R3@$j">
+                                                    <field name="NUM">60</field>
+                                                  </block>
+                                                </value>
+                                              </block>
+                                            </value>
+                                            <statement name="DO0">
+                                              <block type="variables_set" id="J+^IB,P,b-slW,_53*E!">
+                                                <field name="VAR" id="@^s0bK9fM:FXZwSl7)^N" variabletype="">Lautstärke</field>
+                                                <value name="VALUE">
+                                                  <block type="math_arithmetic" id="tCE3ilPo~]j`o){McsHM">
+                                                    <field name="OP">ADD</field>
+                                                    <value name="A">
+                                                      <shadow type="math_number" id="vQ6)nub,ePq`*|,=[w3d">
+                                                        <field name="NUM">1</field>
+                                                      </shadow>
+                                                      <block type="variables_get" id="k=Tp`H/Ej]z#7ri!Um+s">
+                                                        <field name="VAR" id="@^s0bK9fM:FXZwSl7)^N" variabletype="">Lautstärke</field>
+                                                      </block>
+                                                    </value>
+                                                    <value name="B">
+                                                      <shadow type="math_number" id="u[Z2Wg?hBcgE(XeJ,}Q$">
+                                                        <field name="NUM">5</field>
+                                                      </shadow>
+                                                    </value>
+                                                  </block>
+                                                </value>
+                                              </block>
+                                            </statement>
+                                            <next>
+                                              <block type="controls_if" id="WJ%To+9c;ZktW[())7jO">
+                                                <value name="IF0">
+                                                  <block type="logic_compare" id="vwm`z6}X~V@*26lwrwVr">
+                                                    <field name="OP">GTE</field>
+                                                    <value name="A">
+                                                      <block type="variables_get" id="-5+3oGu4pl?38R-F[LfN">
+                                                        <field name="VAR" id="6:s1Zo4W5}f483}-qH}T" variabletype="">Counter</field>
+                                                      </block>
+                                                    </value>
+                                                    <value name="B">
+                                                      <block type="math_number" id="g|d,H)lbq.wa:O,MH=7+">
+                                                        <field name="NUM">10</field>
+                                                      </block>
+                                                    </value>
+                                                  </block>
+                                                </value>
+                                                <statement name="DO0">
+                                                  <block type="controls_if" id="./Q3|;`OS9W])ALp^fdI">
+                                                    <mutation else="1"></mutation>
+                                                    <value name="IF0">
+                                                      <block type="logic_compare" id="ITuPw}=|f)$EWGU!Sg$,">
+                                                        <field name="OP">NEQ</field>
+                                                        <value name="A">
+                                                          <block type="variables_get" id="p~h16t!@6@;q!:$yW[0d">
+                                                            <field name="VAR" id="SFwS`:dt]EDO$hdjaz:5" variabletype="">Raum</field>
+                                                          </block>
+                                                        </value>
+                                                        <value name="B">
+                                                          <block type="text" id="8}+n8~;*F;L+lPjbr^7m">
+                                                            <field name="TEXT">alle</field>
+                                                          </block>
+                                                        </value>
+                                                      </block>
+                                                    </value>
+                                                    <statement name="DO0">
+                                                      <block type="variables_set" id="BY?T;$TYb4fbmeVO+/0S">
+                                                        <field name="VAR" id="1T#Gu#s8/SO!EIx[Q,9=" variabletype="">Befehl</field>
+                                                        <value name="VALUE">
+                                                          <block type="text_join" id="z5T4qmW(ZsjWY?S}ow+$">
+                                                            <mutation items="6"></mutation>
+                                                            <value name="ADD0">
+                                                              <block type="text" id="ms:NU#}0J[8+s/sJtWP!">
+                                                                <field name="TEXT">/</field>
+                                                              </block>
+                                                            </value>
+                                                            <value name="ADD1">
+                                                              <block type="variables_get" id="PwsFL.g214Y:]#_2m0LS">
+                                                                <field name="VAR" id="SFwS`:dt]EDO$hdjaz:5" variabletype="">Raum</field>
+                                                              </block>
+                                                            </value>
+                                                            <value name="ADD2">
+                                                              <block type="text" id="U!#)6,:sZ:tp*kTuuUm[">
+                                                                <field name="TEXT">/say/</field>
+                                                              </block>
+                                                            </value>
+                                                            <value name="ADD3">
+                                                              <block type="variables_get" id="N!hFsUL6m{E6nnGrgB*7">
+                                                                <field name="VAR" id="gvn.@ec[1RiFVpP7PX{a" variabletype="">Nachricht</field>
+                                                              </block>
+                                                            </value>
+                                                            <value name="ADD4">
+                                                              <block type="text" id="9B2RQfgdGuW_LI}Ph^d?">
+                                                                <field name="TEXT">/de/</field>
+                                                              </block>
+                                                            </value>
+                                                            <value name="ADD5">
+                                                              <block type="variables_get" id="PXt*?LD60C[Tf3u4To--">
+                                                                <field name="VAR" id="@^s0bK9fM:FXZwSl7)^N" variabletype="">Lautstärke</field>
+                                                              </block>
+                                                            </value>
+                                                          </block>
+                                                        </value>
+                                                        <next>
+                                                          <block type="request" id="%Cmgm;YVCkM@58d4}K;4">
+                                                            <mutation with_statement="false"></mutation>
+                                                            <field name="WITH_STATEMENT">FALSE</field>
+                                                            <field name="LOG"></field>
+                                                            <value name="URL">
+                                                              <shadow type="text" id="2N%(5gEJVCv/OZJrdq/J">
+                                                                <field name="TEXT">text</field>
+                                                              </shadow>
+                                                              <block type="text_join" id="=q*Bjikt]*c/o/xP@nI@">
+                                                                <mutation items="2"></mutation>
+                                                                <value name="ADD0">
+                                                                  <block type="text" id="O@|Dj(Rx;IRoRvz_mA8(">
+                                                                    <field name="TEXT">http://192.168.138.139:5005</field>
+                                                                  </block>
+                                                                </value>
+                                                                <value name="ADD1">
+                                                                  <block type="variables_get" id="paI|Y4m|FwdQ@TfX{+Bo">
+                                                                    <field name="VAR" id="1T#Gu#s8/SO!EIx[Q,9=" variabletype="">Befehl</field>
+                                                                  </block>
+                                                                </value>
+                                                              </block>
+                                                            </value>
+                                                          </block>
+                                                        </next>
+                                                      </block>
+                                                    </statement>
+                                                    <statement name="ELSE">
+                                                      <block type="variables_set" id="zN~7#2;CEU{127GheI_f">
+                                                        <field name="VAR" id="1T#Gu#s8/SO!EIx[Q,9=" variabletype="">Befehl</field>
+                                                        <value name="VALUE">
+                                                          <block type="text_join" id="C_UkCh(Y+fv_pKv2{eCM">
+                                                            <mutation items="3"></mutation>
+                                                            <value name="ADD0">
+                                                              <block type="text" id="d(8r0f+{PO7=s$eKM}Wg">
+                                                                <field name="TEXT">/sayall/</field>
+                                                              </block>
+                                                            </value>
+                                                            <value name="ADD1">
+                                                              <block type="variables_get" id="6}hNH{l,{yTBgWBmt0{G">
+                                                                <field name="VAR" id="gvn.@ec[1RiFVpP7PX{a" variabletype="">Nachricht</field>
+                                                              </block>
+                                                            </value>
+                                                            <value name="ADD2">
+                                                              <block type="text" id="G%3cdi;8FXkS{NZR02wD">
+                                                                <field name="TEXT">/de/30</field>
+                                                              </block>
+                                                            </value>
+                                                          </block>
+                                                        </value>
+                                                        <next>
+                                                          <block type="request" id="P:YmXs1^!k-@VjUQzZ7_">
+                                                            <mutation with_statement="false"></mutation>
+                                                            <field name="WITH_STATEMENT">FALSE</field>
+                                                            <field name="LOG"></field>
+                                                            <value name="URL">
+                                                              <shadow type="text" id="2N%(5gEJVCv/OZJrdq/J">
+                                                                <field name="TEXT">text</field>
+                                                              </shadow>
+                                                              <block type="text_join" id="HR]p-G@W%02ew]0]O|q`">
+                                                                <mutation items="2"></mutation>
+                                                                <value name="ADD0">
+                                                                  <block type="text" id="{3a`Yvd8-=s.o9VJTM_Y">
+                                                                    <field name="TEXT">http://192.168.138.139:5005</field>
+                                                                  </block>
+                                                                </value>
+                                                                <value name="ADD1">
+                                                                  <block type="variables_get" id="`u3^(S@1XgqA,$X1b,df">
+                                                                    <field name="VAR" id="1T#Gu#s8/SO!EIx[Q,9=" variabletype="">Befehl</field>
+                                                                  </block>
+                                                                </value>
+                                                              </block>
+                                                            </value>
+                                                          </block>
+                                                        </next>
+                                                      </block>
+                                                    </statement>
+                                                  </block>
+                                                </statement>
+                                              </block>
+                                            </next>
+                                          </block>
+                                        </next>
+                                      </block>
+                                    </next>
+                                  </block>
+                                </statement>
+                              </block>
+                            </next>
+                          </block>
+                        </statement>
+                        <statement name="ELSE">
+                          <block type="timeouts_clearinterval" id=")w1trj_P`?%/lwxMJ#Y8">
+                            <field name="NAME">Timer_WCfenster</field>
+                            <next>
+                              <block type="variables_set" id="cJp$3-cSu~[TzNr]Q;t_">
+                                <field name="VAR" id="6:s1Zo4W5}f483}-qH}T" variabletype="">Counter</field>
+                                <value name="VALUE">
+                                  <block type="math_number" id="U2gP8Q.5g*!RsI2/u0]/">
+                                    <field name="NUM">0</field>
+                                  </block>
+                                </value>
+                                <next>
+                                  <block type="variables_set" id="3R!t48Fv}706m[2*NWeP">
+                                    <field name="VAR" id="@^s0bK9fM:FXZwSl7)^N" variabletype="">Lautstärke</field>
+                                    <value name="VALUE">
+                                      <block type="math_number" id="3cD`wY@rC{qISaNK7_;`">
+                                        <field name="NUM">30</field>
+                                      </block>
+                                    </value>
+                                  </block>
+                                </next>
+                              </block>
+                            </next>
+                          </block>
+                        </statement>
+                      </block>
+                    </statement>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </next>
+  </block>
+</xml>
+```
+[\S]
+
+
 ## Weitere Funktionen
 
 ### Grouping
