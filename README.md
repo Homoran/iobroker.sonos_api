@@ -73,10 +73,11 @@ Danach einen reboot aus führen mit `sudo reboot`
 
 ---
 ## Änderungen an der SONOS Infrastruktur
-Sobald NACH der Installation der API Änderungen an der Infrastruktur des SONOS-Systems durchegführt werden, wie
-* Änderung(en) der IPAdressen der Lautsprecher
+Sobald **nach** der Installation der API Änderungen an der Infrastruktur des SONOS-Systems durchegführt werden, wie
+* Änderung(en) der IP-Adressen der Lautsprecher
 * Hinzufügen neuer Lautsprecher
-ist zwingend ein Neustart des Services wie folgt notwendig
+ist zwingend ein Neustart des Services notwendig!
+Dazu werden folgende Befehle ausgeführt:
 
 ```
 sudo systemctl stop sonosapi.service
