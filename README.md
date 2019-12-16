@@ -72,6 +72,20 @@ Anschließend den Service starten mit `sudo systemctl enable sonosapi.service`
 Danach einen reboot aus führen mit `sudo reboot`
 
 ---
+## Änderungen an der SONOS Infrastruktur
+Sobald NACH der Installation der API Änderungen an der Infrastruktur des SONOS-Systems durchegführt werden, wie
+* Änderung(en) der IPAdressen der Lautsprecher
+* Hinzufügen neuer Lautsprecher
+ist zwingend ein Neustart des Services wie folgt notwendig
+
+```
+sudo systemctl stop sonosapi.service
+sudo systemctl start sonosapi.service
+```
+
+Ein kompletter Reboot des ioBroker-Servers erfüllt dies auch, ist aber nicht zwingend notwendig.
+
+---
 
 ## TTS-Befehle
 Man kann verschiedene Sprachen und Stimmen, sowie verschiedene TTS-Engines verwenden:
